@@ -76,11 +76,12 @@
           <ol>
             <li v-for="(stepObj, index) in stepsGetChickens" :key="index">
               {{ stepObj.step }}
-              <a
-                :href="stepObj.url"
+              <NuxtLink
+                :to="stepObj.url"
                 class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
               >
-                {{ stepObj.linkText }}</a
+                {{ stepObj.linkText }}</NuxtLink
+              >
               >
             </li>
           </ol>
@@ -134,14 +135,14 @@ import { ref } from "vue";
 const stepsGetChickens = ref([
   {
     step: "Coops and Runs for your area weather conditions.",
-    url: "#/coops-runs",
+    url: "/coops-runs",
     linkText: "Coops & Runs",
   },
 
-  { step: "Best breeds for the NW.", url: "#/breeds", linkText: "Breeds" },
+  { step: "Best breeds for the NW.", url: "/breeds", linkText: "Breeds" },
   {
     step: "Source best feed that supplies what your ladies need.",
-    url: "#/feeds",
+    url: "/feeds",
     linkText: "Feeds",
   },
   {
@@ -161,21 +162,21 @@ const newBreeds = ref([
     imgSrc: "images/chicken-thumbnail-350.jpg",
     altText: "chicken",
     cardText: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum voluptas itaque enim quas praesentium porro sapiente quod, quibusdam molestias repudiandae.`,
-    url: "#/breeds",
+    url: "/breeds",
     linkText: "Sapphire Jewel",
   },
   {
     imgSrc: "images/chicken-thumbnail-350.jpg",
     altText: "chicken",
     cardText: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum voluptas itaque enim quas praesentium porro sapiente quod, quibusdam molestias repudiandae.`,
-    url: "#/breeds",
+    url: "/breeds",
     linkText: "Seramas",
   },
   {
     imgSrc: "images/chicken-thumbnail-350.jpg",
     altText: "chicken",
     cardText: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum voluptas itaque enim quas praesentium porro sapiente quod, quibusdam molestias repudiandae.`,
-    url: "#/breeds",
+    url: "/breeds",
     linkText: "Wheaten Olive Egger",
   },
 ]);

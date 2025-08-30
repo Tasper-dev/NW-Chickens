@@ -2,7 +2,7 @@
   <div class="card image-card">
     <img
       class="card-img-top"
-      :class="{ 'border border-dark': showBorder }"
+      :class="{ 'border border-2 border-dark': showBorder }"
       @click="clickBorder"
       :src="props.imageSrc"
       :alt="props.alt"
@@ -10,7 +10,9 @@
     <div class="card-body">
       <h5 class="card-title">{{ props.title }}</h5>
       <p class="card-text">{{ props.cardText }}</p>
-      <a :href="props.url" class="btn btn-success">{{ props.linkText }}</a>
+      <NuxtLink :to="props.url" class="btn btn-success">{{
+        props.linkText
+      }}</NuxtLink>
     </div>
   </div>
 </template>
