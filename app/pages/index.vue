@@ -1,9 +1,9 @@
 <template>
-  <HeaderComp>
+  <Header>
     <template #subheader>
       <h2>Girls Gone Wild!</h2>
     </template>
-  </HeaderComp>
+  </Header>
   <div>
     <!-- //*Carousel*// -->
     <div id="homeCarousel" class="carousel slide">
@@ -93,19 +93,27 @@
             height="467"
           />
         </article>
-        <!-- //* V-if, V-else for Button *// -->
-        <div class="p-5">
+        <!-- //* Joke Section with API Call *// -->
+        <div class="text-center p-5 bg-body-secondary">
+          <h3>Fowl Joke of the Day</h3>
           <button
             type="button"
             class="btn btn-success btn-lg"
-            @click="joke = !joke"
+            @click="fetchAnimalJoke"
+            :disabled="loading"
           >
-            Fowl Joke of the Day
+            Cluck Me
           </button>
-          <p class="pt-2 fw-bolder" v-if="joke">
-            What's a chickens favorite trilogy?
+          <p class="pt-2 fw-bolder">
+            <span v-if="loading">Loading joke...</span>
+            <span v-else-if="errorMessage">Error: {{ errorMessage }}</span>
+            <span v-else-if="animalJoke && animalJoke.jokes.length">
+              {{ animalJoke.jokes[0].joke }}
+            </span>
+            <span v-else
+              >Looks like you're outta cluck, no jokes available.</span
+            >
           </p>
-          <p class="pt-2 fw-bolder" v-else>Lord of the Wings.</p>
         </div>
       </section>
 
@@ -130,6 +138,7 @@
 <script setup>
 import Header from "/components/Header.vue";
 import ImageCard from "/components/Image-Card.vue";
+import jokeApi from "@/composables/jokeApi.js";
 import { ref } from "vue";
 
 const stepsGetChickens = ref([
@@ -180,7 +189,6 @@ const newBreeds = ref([
     linkText: "Wheaten Olive Egger",
   },
 ]);
-
-const joke = ref(true);
+const { animalJoke, loading, errorMessage, fetchAnimalJoke } = jokeApi();
 </script>
 <style></style>
