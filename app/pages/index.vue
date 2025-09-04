@@ -94,7 +94,7 @@
           />
         </article>
         <!-- //* Joke Section with API Call *// -->
-        <div class="text-center p-5 bg-body-secondary">
+        <!-- <div class="text-center p-5 bg-body-secondary">
           <h3>Fowl Joke of the Day</h3>
           <button
             type="button"
@@ -114,7 +114,32 @@
               >Looks like you're outta cluck, no jokes available.</span
             >
           </p>
-        </div>
+        </div> -->
+        <article class="p-5">
+          <h3>Cock-tails</h3>
+          <p>
+            Part of the fun of raising your own backyard chickens is enjoying
+            their antics! Kick off your shoes, put your feet in the grass, and
+            sip one of these tasty summer cocktails while you watch your
+            chickens shake their tail feathers.
+          </p>
+          <ul>
+            <li v-for="cocktail in cocktails" :key="cocktail.idDrink">
+              <RecipeCard
+                :drink="cocktail.strDrink"
+                :image="cocktail.strDrinkThumb"
+                :ingredientOne="cocktail.strIngredient1"
+                :ingredientTwo="cocktail.strIngredient2"
+                :ingredientThree="cocktail.strIngredient3"
+                :ingredientFour="cocktail.strIngredient4"
+                :ingredientFive="cocktail.strIngredient5"
+                :ingredientSix="cocktail.strIngredient6"
+                :ingredientSeven="cocktail.strIngredient7"
+                :instructions="cocktail.strInstructions"
+              ></RecipeCard>
+            </li>
+          </ul>
+        </article>
       </section>
 
       <!-- //* Image Card Component & V-for Loop *//-->
@@ -138,8 +163,9 @@
 <script setup>
 import Header from "/components/Header.vue";
 import ImageCard from "/components/Image-Card.vue";
-import jokeApi from "@/composables/jokeApi.js";
-import { ref } from "vue";
+// import { useAnimalJoke } from "/composable/jokeApi.js";
+import RecipeCard from "/components/RecipeCard.vue";
+import { ref, onMounted } from "vue";
 
 const stepsGetChickens = ref([
   {
@@ -189,6 +215,21 @@ const newBreeds = ref([
     linkText: "Wheaten Olive Egger",
   },
 ]);
-const { animalJoke, loading, errorMessage, fetchAnimalJoke } = jokeApi();
+// const { animalJoke, loading, errorMessage, fetchAnimalJoke } = useAnimalJoke();
+
+const cocktails = ref([]);
+
+onMounted(async () => {
+  try {
+    const response = await fetch(
+      "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita"
+    );
+    const data = await response.json();
+    cocktails.value = data.drinks;
+    console.log(cocktails.value);
+  } catch (error) {
+    console.error("Error fetching cocktails:", error);
+  }
+});
 </script>
-<style></style>
+<style scoped></style>
