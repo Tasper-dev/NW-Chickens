@@ -115,31 +115,6 @@
             >
           </p>
         </div> -->
-        <article class="p-5">
-          <h3>Cock-tails</h3>
-          <p>
-            Part of the fun of raising your own backyard chickens is enjoying
-            their antics! Kick off your shoes, put your feet in the grass, and
-            sip one of these tasty summer cocktails while you watch your
-            chickens shake their tail feathers.
-          </p>
-          <ul>
-            <li v-for="cocktail in cocktails" :key="cocktail.idDrink">
-              <RecipeCard
-                :drink="cocktail.strDrink"
-                :image="cocktail.strDrinkThumb"
-                :ingredientOne="cocktail.strIngredient1"
-                :ingredientTwo="cocktail.strIngredient2"
-                :ingredientThree="cocktail.strIngredient3"
-                :ingredientFour="cocktail.strIngredient4"
-                :ingredientFive="cocktail.strIngredient5"
-                :ingredientSix="cocktail.strIngredient6"
-                :ingredientSeven="cocktail.strIngredient7"
-                :instructions="cocktail.strInstructions"
-              ></RecipeCard>
-            </li>
-          </ul>
-        </article>
       </section>
 
       <!-- //* Image Card Component & V-for Loop *//-->
@@ -156,6 +131,35 @@
           :linkText="ImageCard.linkText"
         ></ImageCard>
       </aside>
+    </div>
+    <div class="row">
+      <!-- //* Recipe Card Component & API Call *//-->
+      <article class="p-5 bg-body-secondary">
+        <div class="col-12">
+          <h3>Cock-tails</h3>
+          <p>
+            Part of the fun of raising your own backyard chickens is enjoying
+            their antics! Kick off your shoes, put your feet in the grass, and
+            sip one of these tasty summer margaritas while you watch your
+            chickens shake their tail feathers.
+          </p>
+        </div>
+        <div class="row">
+          <div
+            v-for="cocktail in cocktails"
+            :key="cocktail.idDrink"
+            class="col-sm-4 mb-3"
+          >
+            <RecipeCard
+              :drink="cocktail.strDrink"
+              :image="cocktail.strDrinkThumb"
+              :ingredients="cocktail.ingredients"
+              :instructions="cocktail.strInstructions"
+              class="p-2"
+            ></RecipeCard>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 </template>
@@ -225,7 +229,26 @@ onMounted(async () => {
       "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita"
     );
     const data = await response.json();
-    cocktails.value = data.drinks;
+
+    //Build an array of cocktail objects with ingredients and measurements
+    cocktails.value = data.drinks.map((cocktail) => {
+      const ingredients = [];
+      for (let i = 1; i <= 15; i++) {
+        const ingredient = cocktail[`strIngredient${i}`];
+        const measure = cocktail[`strMeasure${i}`];
+        if (ingredient) {
+          ingredients.push({
+            ingredient: ingredient,
+            measure: measure ? measure.trim() : "",
+          });
+        }
+      }
+      return {
+        ...cocktail,
+        ingredients,
+      };
+    });
+
     console.log(cocktails.value);
   } catch (error) {
     console.error("Error fetching cocktails:", error);
