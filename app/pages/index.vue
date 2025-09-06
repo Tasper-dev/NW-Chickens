@@ -82,7 +82,6 @@
               >
                 {{ stepObj.linkText }}</NuxtLink
               >
-              >
             </li>
           </ol>
           <img
@@ -93,8 +92,9 @@
             height="467"
           />
         </article>
+
         <!-- //* Joke Section with API Call *// -->
-        <!-- <div class="text-center p-5 bg-body-secondary">
+        <article class="text-center p-5 bg-body-secondary">
           <h3>Fowl Joke of the Day</h3>
           <button
             type="button"
@@ -105,8 +105,8 @@
             Cluck Me
           </button>
           <p class="pt-2 fw-bolder">
-            <span v-if="loading">Loading joke...</span>
-            <span v-else-if="errorMessage">Error: {{ errorMessage }}</span>
+            <span v-if="jokeLoading">Loading joke...</span>
+            <span v-else-if="jokeErrorMessage">Error: {{ errorMessage }}</span>
             <span v-else-if="animalJoke && animalJoke.jokes.length">
               {{ animalJoke.jokes[0].joke }}
             </span>
@@ -114,7 +114,7 @@
               >Looks like you're outta cluck, no jokes available.</span
             >
           </p>
-        </div> -->
+        </article>
       </section>
 
       <!-- //* Image Card Component & V-for Loop *//-->
@@ -132,6 +132,7 @@
         ></ImageCard>
       </aside>
     </div>
+
     <div class="row">
       <!-- //* Recipe Card Component & API Call *//-->
       <article class="p-5 bg-body-secondary">
@@ -145,6 +146,8 @@
           </p>
         </div>
         <div class="row">
+          <div v-if="loading">Loading...</div>
+          <div v-if="errorMessage">Error: {{ errorMessage }}</div>
           <div
             v-for="cocktail in cocktails"
             :key="cocktail.idDrink"
@@ -165,11 +168,12 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
 import Header from "/components/Header.vue";
 import ImageCard from "/components/Image-Card.vue";
-// import { useAnimalJoke } from "/composable/jokeApi.js";
 import RecipeCard from "/components/RecipeCard.vue";
-import { ref, onMounted } from "vue";
+import { fetchAnimalJoke } from "/services/jokeApi.js";
+import { fetchCocktails } from "/services/cocktailsAPI.js";
 
 const stepsGetChickens = ref([
   {
@@ -219,39 +223,37 @@ const newBreeds = ref([
     linkText: "Wheaten Olive Egger",
   },
 ]);
-// const { animalJoke, loading, errorMessage, fetchAnimalJoke } = useAnimalJoke();
 
+// * Cocktail API Call and Joke API Call *//
 const cocktails = ref([]);
+const loading = ref(false);
+const errorMessage = ref(null);
+
+const animalJoke = ref(null);
+const jokeLoading = ref(false);
+const jokeErrorMessage = ref(null);
 
 onMounted(async () => {
+  loading.value = true;
   try {
-    const response = await fetch(
-      "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita"
-    );
-    const data = await response.json();
-
-    //Build an array of cocktail objects with ingredients and measurements
-    cocktails.value = data.drinks.map((cocktail) => {
-      const ingredients = [];
-      for (let i = 1; i <= 15; i++) {
-        const ingredient = cocktail[`strIngredient${i}`];
-        const measure = cocktail[`strMeasure${i}`];
-        if (ingredient) {
-          ingredients.push({
-            ingredient: ingredient,
-            measure: measure ? measure.trim() : "",
-          });
-        }
-      }
-      return {
-        ...cocktail,
-        ingredients,
-      };
-    });
-
-    console.log(cocktails.value);
+    cocktails.value = await fetchCocktails("margarita");
   } catch (error) {
-    console.error("Error fetching cocktails:", error);
+    console.error("Error:", error);
+    errorMessage.value = error.message;
+  } finally {
+    console.log("Cocktail fetch attempt finished.");
+    loading.value = false;
+  }
+
+  jokeLoading.value = true;
+  try {
+    animalJoke.value = await fetchAnimalJoke();
+  } catch (error) {
+    console.error("Error:", error);
+    jokeErrorMessage.value = error.message;
+  } finally {
+    console.log("Joke fetch attempt finished.");
+    jokeLoading.value = false;
   }
 });
 </script>
