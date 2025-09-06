@@ -99,7 +99,7 @@
           <button
             type="button"
             class="btn btn-success btn-lg"
-            @click="fetchAnimalJoke"
+            @click="getAnimalJoke"
             :disabled="loading"
           >
             Cluck Me
@@ -107,12 +107,9 @@
           <p class="pt-2 fw-bolder">
             <span v-if="jokeLoading">Loading joke...</span>
             <span v-else-if="jokeErrorMessage">Error: {{ errorMessage }}</span>
-            <span v-else-if="animalJoke && animalJoke.jokes.length">
-              {{ animalJoke.jokes[0].joke }}
+            <span v-else-if="animalJoke">
+              {{ animalJoke.setup }} {{ animalJoke.delivery }}
             </span>
-            <span v-else
-              >Looks like you're outta cluck, no jokes available.</span
-            >
           </p>
         </article>
       </section>
@@ -224,14 +221,10 @@ const newBreeds = ref([
   },
 ]);
 
-// * Cocktail API Call and Joke API Call *//
+// * Cocktail API Call *//
 const cocktails = ref([]);
 const loading = ref(false);
 const errorMessage = ref(null);
-
-const animalJoke = ref(null);
-const jokeLoading = ref(false);
-const jokeErrorMessage = ref(null);
 
 onMounted(async () => {
   loading.value = true;
@@ -244,7 +237,14 @@ onMounted(async () => {
     console.log("Cocktail fetch attempt finished.");
     loading.value = false;
   }
+});
 
+// * Joke API Call *//
+const animalJoke = ref(null);
+const jokeLoading = ref(false);
+const jokeErrorMessage = ref(null);
+
+async function getAnimalJoke() {
   jokeLoading.value = true;
   try {
     animalJoke.value = await fetchAnimalJoke();
@@ -255,6 +255,6 @@ onMounted(async () => {
     console.log("Joke fetch attempt finished.");
     jokeLoading.value = false;
   }
-});
+}
 </script>
 <style scoped></style>
