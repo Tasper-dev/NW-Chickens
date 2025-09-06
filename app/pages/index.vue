@@ -199,21 +199,21 @@ const stepsGetChickens = ref([
 
 const newBreeds = ref([
   {
-    imgSrc: "images/chicken-thumbnail-350.jpg",
+    imgSrc: "/images/chicken-thumbnail-350.jpg",
     altText: "chicken",
     cardText: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum voluptas itaque enim quas praesentium porro sapiente quod, quibusdam molestias repudiandae.`,
     url: "/breeds",
     linkText: "Sapphire Jewel",
   },
   {
-    imgSrc: "images/chicken-thumbnail-350.jpg",
+    imgSrc: "/images/chicken-thumbnail-350.jpg",
     altText: "chicken",
     cardText: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum voluptas itaque enim quas praesentium porro sapiente quod, quibusdam molestias repudiandae.`,
     url: "/breeds",
     linkText: "Seramas",
   },
   {
-    imgSrc: "images/chicken-thumbnail-350.jpg",
+    imgSrc: "/images/chicken-thumbnail-350.jpg",
     altText: "chicken",
     cardText: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum voluptas itaque enim quas praesentium porro sapiente quod, quibusdam molestias repudiandae.`,
     url: "/breeds",
