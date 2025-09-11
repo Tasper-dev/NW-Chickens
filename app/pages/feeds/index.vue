@@ -116,5 +116,15 @@ const feedAccordion = ref([
                       blanditiis unde?`,
   },
 ]);
+useHead({
+  title: "NWC | Feeds",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Discover the best chicken feeds for every stage of your flock's life. From chick starter to layer feed, ensure your chickens get the nutrition they need to thrive.",
+    },
+  ],
+});
 </script>
 <style></style>

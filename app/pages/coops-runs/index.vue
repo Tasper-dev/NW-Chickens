@@ -82,6 +82,16 @@ const coopsArticles = ref([
                 eligendi exercitationem. Temporibus at nostrum laborum dolores.`,
   },
 ]);
+useHead({
+  title: "NWC | Coops & Runs",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Discover the best practices for building and maintaining coops and runs to keep your backyard chickens safe, comfortable, and healthy.",
+    },
+  ],
+});
 </script>
 <style>
 .article {

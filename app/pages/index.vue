@@ -256,5 +256,16 @@ async function getAnimalJoke() {
     jokeLoading.value = false;
   }
 }
+
+useHead({
+  title: "NWC | Home",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Your best resource for raising backyard chickens in the Pacific Northwest. Discover tips on coops, breeds, feeds, and more to ensure your flock thrives!",
+    },
+  ],
+});
 </script>
 <style scoped></style>

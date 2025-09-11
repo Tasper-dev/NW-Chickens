@@ -4,6 +4,14 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   app: {
     head: {
+      title: "NW Chickens",
+      meta: [
+        {
+          name: "description",
+          content: "Raising chickens in the Pacific Northwest",
+        },
+      ],
+      htmlAttrs: { lang: "en" },
       link: [
         {
           rel: "stylesheet",
