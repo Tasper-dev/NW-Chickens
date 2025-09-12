@@ -18,7 +18,7 @@ Use web analytics to see who visits your site, how much traffic and from where, 
 Heat maps show you where a user's mouse hovers and clicks; showing you what content is the most engaging.
 
 Ideally Implement SEO for this project:
--Install Google Analytics to see what content is more popular to help determine how to shape future content.
+-Install Google Analytics to see who is visiting your site and what content is more popular to help determine how to shape future content.
 -Use Google Analytics to learn the keywords my site ranks for in search. Find keywords to target and incorporate them.
 -Review heading tags to ensure they highlight most important information (keywords).
 -Review links to make sure all are functional and useful.
